@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -12,9 +13,15 @@ import (
 	"github.com/faiface/beep/speaker"
 )
 
+var (
+	sound = flag.String("sound",
+		os.Getenv("GOPATH")+"/src/github.com/zackradisic/dinger/sounds/ding.mp3",
+		"The path to the sound file to play")
+)
+
 func main() {
 	if len(os.Args) <= 1 {
-		fmt.Println("Usage: kitchen-timer <cmd>")
+		fmt.Println("Usage: dinger <cmd>")
 		return
 	}
 
@@ -33,7 +40,7 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	f, err := os.Open("sounds/ding.mp3")
+	f, err := os.Open(*sound)
 	if err != nil {
 		log.Fatal(err)
 	}

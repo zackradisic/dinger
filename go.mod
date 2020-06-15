@@ -1,4 +1,4 @@
-module github.com/zackradisic/kitchen-timer
+module github.com/zackradisic/dinger
 
 go 1.14
 
