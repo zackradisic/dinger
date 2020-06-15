@@ -14,7 +14,7 @@ import (
 
 func main() {
 	if len(os.Args) <= 1 {
-		fmt.Println("ding <cmd>")
+		fmt.Println("Usage: kitchen-timer <cmd>")
 		return
 	}
 
