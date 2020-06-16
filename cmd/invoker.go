@@ -18,7 +18,11 @@ func (i *Invoker) Run() error {
 	}
 
 	if c, ok := i.cmds[os.Args[1]]; ok {
-		err := c.execute(os.Args[2:])
+		err := c.validateArgs(os.Args[2:])
+		if err != nil {
+			return err
+		}
+		err = c.execute(os.Args[2:])
 		if err != nil {
 			return err
 		}
@@ -45,7 +49,7 @@ func (i *Invoker) unknownCommandString(cmdName string) string {
 func (i *Invoker) usageString() string {
 	s := "Usage:"
 	for _, cmd := range i.cmds {
-		s += "\n  " + usageString(cmd)
+		s += "\n  " + usageString(cmd.args)
 	}
 
 	return s

@@ -2,6 +2,7 @@ package config
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -19,6 +20,33 @@ func defaultConfig() *Config {
 	return &Config{
 		Sound: os.Getenv("GOPATH") + "/src/github.com/zackradisic/dinger/sounds/ding.mp3",
 	}
+}
+
+// SetValue sets a config's value for the given key
+func SetValue(key string, val interface{}) error {
+	switch key {
+	case "sound":
+		if s, ok := val.(string); ok {
+			err := setSound(s)
+			if err != nil {
+				return err
+			}
+
+			return nil
+		}
+
+		return fmt.Errorf("Sound must be a valid path")
+	}
+
+	return nil
+}
+
+func setSound(path string) error {
+	_, err := os.Open(path)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // ReadConfig reads the values of config.json and puts them into the Configuration variable,

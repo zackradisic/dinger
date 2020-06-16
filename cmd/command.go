@@ -8,17 +8,27 @@ type command struct {
 	validateArgs func(args []string) error
 }
 
-func usageString(c *command) string {
-	if len(c.args) == 0 {
+func usageString(args []string) string {
+	if len(args) == 0 {
 		return ""
-	} else if len(c.args) == 1 {
-		return fmt.Sprintf("<%s>", c.args[0])
+	} else if len(args) == 1 {
+		return fmt.Sprintf("<%s>", args[0])
 	} else {
-		s := fmt.Sprintf("<%s", c.args[0])
-		for _, arg := range c.args {
+		s := fmt.Sprintf("<%s", args[0])
+		for _, arg := range args {
 			s += fmt.Sprintf(" | %s", arg)
 		}
 		s += ">"
 		return s
 	}
+}
+
+func contains(args []string, arg string) bool {
+	for _, a := range args {
+		if a == arg {
+			return true
+		}
+	}
+
+	return false
 }
