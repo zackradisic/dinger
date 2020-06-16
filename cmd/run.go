@@ -10,14 +10,18 @@ import (
 	"github.com/faiface/beep"
 	"github.com/faiface/beep/mp3"
 	"github.com/faiface/beep/speaker"
+
+	"github.com/zackradisic/dinger/config"
 )
 
 func newRunCommand() *command {
-	run := &Command{
-		execute: executeRunCommand,
-		args: []string {"cmd"},
+	run := &command{
+		execute:      executeRunCommand,
+		args:         []string{"cmd"},
 		validateArgs: validateRunCommandArgs,
 	}
+
+	return run
 }
 
 func executeRunCommand(args []string) error {
@@ -36,7 +40,7 @@ func executeRunCommand(args []string) error {
 		log.Fatal(err.Error())
 	}
 
-	sound := viper.GetString("sound")
+	sound := config.Configuration.Sound
 	f, err := os.Open(sound)
 	if err != nil {
 		log.Fatal(err)

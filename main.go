@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/zackradisic/dinger/cmd"
+	"github.com/zackradisic/dinger/config"
 )
 
 var (
@@ -14,5 +15,8 @@ var (
 )
 
 func main() {
-	cmd.Execute()
+	config.ReadConfig()
+	cmdInvoker := cmd.CreateInvoker()
+
+	cmdInvoker.Run()
 }
