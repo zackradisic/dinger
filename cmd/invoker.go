@@ -13,7 +13,7 @@ type Invoker struct {
 // Run executes the given command
 func (i *Invoker) Run() error {
 	if len(os.Args) <= 1 {
-		fmt.Printf("Usage:%s\n", i.usageString())
+		fmt.Printf(i.usageString())
 		return nil
 	}
 
@@ -35,11 +35,12 @@ func (i *Invoker) Run() error {
 }
 
 func (i *Invoker) init() {
-	i.registerCommand("run", newRunCommand())
+	i.registerCommand(newRunCommand())
+	i.registerCommand(newConfigCommand())
 }
 
-func (i *Invoker) registerCommand(name string, cmd *command) {
-	i.cmds[name] = cmd
+func (i *Invoker) registerCommand(cmd *command) {
+	i.cmds[cmd.name] = cmd
 }
 
 func (i *Invoker) unknownCommandString(cmdName string) string {
@@ -49,7 +50,7 @@ func (i *Invoker) unknownCommandString(cmdName string) string {
 func (i *Invoker) usageString() string {
 	s := "Usage:"
 	for _, cmd := range i.cmds {
-		s += "\n  " + usageString(cmd.args)
+		s += fmt.Sprintf("\n  %s %s", cmd.name, usageString(cmd.args))
 	}
 
 	return s

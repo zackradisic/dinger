@@ -3,6 +3,7 @@ package cmd
 import "fmt"
 
 type command struct {
+	name         string
 	execute      func(args []string) error
 	args         []string
 	validateArgs func(args []string) error

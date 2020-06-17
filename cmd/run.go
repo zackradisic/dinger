@@ -16,6 +16,7 @@ import (
 
 func newRunCommand() *command {
 	run := &command{
+		name:         "run",
 		execute:      executeRunCommand,
 		args:         []string{"cmd"},
 		validateArgs: validateRunCommandArgs,

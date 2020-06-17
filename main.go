@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 
 	"github.com/zackradisic/dinger/cmd"
@@ -18,5 +19,8 @@ func main() {
 	config.ReadConfig()
 	cmdInvoker := cmd.CreateInvoker()
 
-	cmdInvoker.Run()
+	err := cmdInvoker.Run()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 }

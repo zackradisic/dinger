@@ -7,7 +7,12 @@ import (
 )
 
 func newConfigCommand() *command {
-	return &command{}
+	return &command{
+		name:         "config",
+		execute:      executeConfigCommand,
+		validateArgs: validateRunCommandArgs,
+		args:         []string{"set", "get"},
+	}
 }
 
 func executeConfigCommand(args []string) error {
@@ -22,6 +27,17 @@ func executeConfigCommand(args []string) error {
 		}
 
 		fmt.Printf("Success: %s has been set to %s\n", args[1], args[2])
+		return nil
+	}
+
+	if len(args) == 2 {
+		switch args[0] {
+		case "get":
+			err := config.PrintValue(args[1])
+			if err != nil {
+				return err
+			}
+		}
 	}
 
 	return nil
