@@ -5,7 +5,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/url"
 	"os"
+
+	"github.com/zackradisic/dinger/util"
 )
 
 // Config represents the configuration details loaded from the config file
@@ -59,7 +62,12 @@ func PrintValue(key string) error {
 }
 
 func setSound(path string) error {
-	_, err := os.Open(path)
+	_, err := url.Parse(path)
+	if err == nil {
+		err = util.Download(path, "download.mp3")
+	}
+
+	_, err = os.Open(path)
 	if err != nil {
 		return err
 	}
